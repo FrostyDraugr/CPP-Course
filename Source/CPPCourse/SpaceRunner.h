@@ -6,6 +6,10 @@
 #include "GameFramework/Character.h"
 #include "SpaceRunner.generated.h"
 
+class UCapsuleComponent;
+class USkeletalMeshComponent;
+class UInputMappingContext;
+
 UCLASS()
 class CPPCOURSE_API ASpaceRunner : public ACharacter
 {
@@ -21,6 +25,13 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	
+	void MoveLeft(float Value);
+
+	void MoveRight(float Value);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+	UInputMappingContext* ShipMappingContext;
 
 public:	
 	// Called every frame
@@ -29,4 +40,21 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	class UCameraComponent* GetViewCameraComponent() const
+	{
+		return ViewCamera;
+	}
+
+	void RestartLevel();
+
+	UFUNCTION()
+		void OnOverlapBegin(UPrimitiveComponent* OverlappedComp,
+			AActor* OtherActor, UPrimitiveComponent* OtherComp,
+			int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+private:
+	float zPosition;
+	FVector tempPos = FVector();
+
+	bool CanMove;
 };

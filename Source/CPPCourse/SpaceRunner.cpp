@@ -25,10 +25,32 @@ void ASpaceRunner::Tick(float DeltaTime)
 
 }
 
+void ASpaceRunner::MoveLeft(float Value)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Moving Left", Value));
+}
+
+void ASpaceRunner::MoveRight(float Value)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Moving Right", Value));
+}
+
+void ASpaceRunner::RestartLevel()
+{
+
+}
+
 // Called to bind functionality to input
 void ASpaceRunner::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+}
+
+void ASpaceRunner::OnOverlapBegin(UPrimitiveComponent* OverlappedComp,
+	AActor* OtherActor, UPrimitiveComponent* OtherComp,
+	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
 
 }
 
