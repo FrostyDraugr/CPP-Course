@@ -6,7 +6,10 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+
+#include "Components/InputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "EnhancedInputComponent.h"
 
 // Sets default values
 ASpaceRunner::ASpaceRunner()
@@ -58,10 +61,14 @@ void ASpaceRunner::Tick(float DeltaTime)
 
 }
 
-//void ASpaceRunner::Move(const FInputActionValue& Value)
-//{
-//
-//}
+void ASpaceRunner::Boost(const FInputActionValue& Value)
+{
+	const bool CurrentValue = Value.Get<bool>();
+	if (CurrentValue)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("IA_JUMP triggered"));
+	}
+}
 
 void ASpaceRunner::RestartLevel()
 {
@@ -73,6 +80,11 @@ void ASpaceRunner::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
+	{
+		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Started, this,
+			&ASpaceRunner::Boost);
+	}
 }
 
 void ASpaceRunner::OnOverlapBegin(UPrimitiveComponent* OverlappedComp,
