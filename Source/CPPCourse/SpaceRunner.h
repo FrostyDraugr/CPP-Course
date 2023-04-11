@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+//#include "InputActionValue.h"
 #include "SpaceRunner.generated.h"
+
 
 class UCapsuleComponent;
 class USkeletalMeshComponent;
@@ -25,13 +27,14 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	
-	void MoveLeft(float Value);
-
-	void MoveRight(float Value);
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 	UInputMappingContext* ShipMappingContext;
+
+	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+	//UInputAction* MoveAction;
+
+	//void Move(const FInputActionValue& Value);
 
 public:	
 	// Called every frame
