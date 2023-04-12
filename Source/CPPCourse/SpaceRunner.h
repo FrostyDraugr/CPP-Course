@@ -38,7 +38,7 @@ protected:
 		UInputMappingContext* ShipMappingContext;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
-		UInputAction* SprintAction;
+		UInputAction* BoostAction;
 
 public:	
 	// Called every frame

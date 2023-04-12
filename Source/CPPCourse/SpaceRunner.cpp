@@ -82,7 +82,7 @@ void ASpaceRunner::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
 	{
-		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Started, this,
+		EnhancedInputComponent->BindAction(BoostAction, ETriggerEvent::Started, this,
 			&ASpaceRunner::Boost);
 	}
 }
