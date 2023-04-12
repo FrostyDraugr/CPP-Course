@@ -27,18 +27,19 @@ ASpaceRunner::ASpaceRunner()
 	//bUseControllerRotationYaw = false;
 
 	ViewCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("View Camera"));
-	ViewCamera->bUsePawnControlRotation = false;
+	//ViewCamera->bUsePawnControlRotation = false;
 	
 	//GetCharacterMovement()->bOrientRotationToMovement = true;
 	//GetCharacterMovement()->RotationRate = FRotator(0.0f, 720.0f, 0.0f);
 	//GetCharacterMovement()->GravityScale = 2.0f;
 	//GetCharacterMovement()->AirControl = 0.8f;
-	GetCharacterMovement()->JumpZVelocity = 1000.0f;
-	GetCharacterMovement()->GroundFriction = 3.0f;
-	GetCharacterMovement()->MaxWalkSpeed = 600.0f;
-	GetCharacterMovement()->MaxFlySpeed = 600.0f;
+	//GetCharacterMovement()->JumpZVelocity = 1000.0f;
+	//GetCharacterMovement()->GroundFriction = 3.0f;
+	//GetCharacterMovement()->MaxWalkSpeed = 600.0f;
 	//GetCharacterMovement()->MovementMode = MOVE_Flying;
+	GetCharacterMovement()->MaxFlySpeed = 150.0f;
 	GetCharacterMovement()->DefaultLandMovementMode = MOVE_Flying;
+	GetCharacterMovement()->BrakingDecelerationFlying = 5.0f;
 
 
 	tempPos = GetActorLocation();
