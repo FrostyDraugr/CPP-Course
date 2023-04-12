@@ -7,9 +7,6 @@
 #include "InputActionValue.h"
 #include "SpaceRunner.generated.h"
 
-
-class UCapsuleComponent;
-class USkeletalMeshComponent;
 class UInputMappingContext;
 class UInputAction;
 
@@ -39,6 +36,11 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 		UInputAction* BoostAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+		UInputAction* MoveAction;
+
+	void Move(const FInputActionValue& Value);
 
 public:	
 	// Called every frame
