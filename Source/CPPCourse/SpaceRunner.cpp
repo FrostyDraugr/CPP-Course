@@ -37,7 +37,7 @@ ASpaceRunner::ASpaceRunner()
 	//GetCharacterMovement()->GroundFriction = 3.0f;
 	//GetCharacterMovement()->MaxWalkSpeed = 600.0f;
 	//GetCharacterMovement()->MovementMode = MOVE_Flying;
-	GetCharacterMovement()->MaxFlySpeed = 150.0f;
+	GetCharacterMovement()->MaxFlySpeed = 300.0f;
 	GetCharacterMovement()->DefaultLandMovementMode = MOVE_Flying;
 	GetCharacterMovement()->BrakingDecelerationFlying = 5.0f;
 
