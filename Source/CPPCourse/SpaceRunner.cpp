@@ -41,9 +41,10 @@ ASpaceRunner::ASpaceRunner()
 	GetCharacterMovement()->DefaultLandMovementMode = MOVE_Flying;
 	GetCharacterMovement()->BrakingDecelerationFlying = 5.0f;
 
-
 	tempPos = GetActorLocation();
 	zPosition = tempPos.Z + 300.0f;
+
+	//lives = 3;
 }
 
 // Called when the game starts or when spawned
@@ -51,7 +52,7 @@ void ASpaceRunner::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	UE_LOG(LogTemp, Warning, TEXT("Test"));
+	//UE_LOG(LogTemp, Warning, TEXT("Testing"));
 
 	if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
 	{
