@@ -42,6 +42,15 @@ protected:
 
 	void Move(const FInputActionValue& Value);
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+		UInputAction* FireAction;
+
+	void Fire(const FInputActionValue& Value);
+
+
+	UPROPERTY(VisibleAnywhere)
+		class UHealthComp* HealthComponent;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -60,10 +69,14 @@ public:
 		void OnOverlapBegin(UPrimitiveComponent* OverlappedComp,
 			AActor* OtherActor, UPrimitiveComponent* OtherComp,
 			int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	
+	UFUNCTION()
+		void Destroyed();
 
 private:
 	float zPosition;
 	FVector tempPos = FVector();
 
 	bool CanMove;
+
 };

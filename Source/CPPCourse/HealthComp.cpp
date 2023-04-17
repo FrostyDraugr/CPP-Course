@@ -40,6 +40,11 @@ void UHealthComp::TakeDamage(AActor* DamageActor, float Damage, const UDamageTyp
 	Health = FMath::Clamp(Health - Damage, 0.0f, DefaultHealth);
 	UE_LOG(LogTemp, Warning, TEXT("Damage Taken"));
 
+	if (Health == 0)
+	{
+		GetOwner()->Destroy();
+	}
+
 }
 
 

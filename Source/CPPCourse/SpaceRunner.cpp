@@ -11,6 +11,10 @@
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 
+#include "HealthComp.h"
+
+#include "Engine/World.h"
+
 // Sets default values
 ASpaceRunner::ASpaceRunner()
 {
@@ -18,25 +22,8 @@ ASpaceRunner::ASpaceRunner()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	//GetCapsuleComponent()->InitCapsuleSize(42.f, 96.f);
-	//GetCapsuleComponent()->SetCollisionResponseToChannel
-	//(ECC_GameTraceChannel1, ECR_Overlap);
-
-	//bUseControllerRotationPitch = false;
-	//bUseControllerRotationRoll = false;
-	//bUseControllerRotationYaw = false;
-
 	ViewCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("View Camera"));
-	//ViewCamera->bUsePawnControlRotation = false;
-	
-	//GetCharacterMovement()->bOrientRotationToMovement = true;
-	//GetCharacterMovement()->RotationRate = FRotator(0.0f, 720.0f, 0.0f);
-	//GetCharacterMovement()->GravityScale = 2.0f;
-	//GetCharacterMovement()->AirControl = 0.8f;
-	//GetCharacterMovement()->JumpZVelocity = 1000.0f;
-	//GetCharacterMovement()->GroundFriction = 3.0f;
-	//GetCharacterMovement()->MaxWalkSpeed = 600.0f;
-	//GetCharacterMovement()->MovementMode = MOVE_Flying;
+
 	GetCharacterMovement()->MaxFlySpeed = 300.0f;
 	GetCharacterMovement()->DefaultLandMovementMode = MOVE_Flying;
 	GetCharacterMovement()->BrakingDecelerationFlying = 5.0f;
@@ -44,7 +31,7 @@ ASpaceRunner::ASpaceRunner()
 	tempPos = GetActorLocation();
 	zPosition = tempPos.Z + 300.0f;
 
-	//lives = 3;
+	HealthComponent = CreateDefaultSubobject<UHealthComp>(TEXT("Health Component"));
 }
 
 // Called when the game starts or when spawned
@@ -91,6 +78,28 @@ void ASpaceRunner::Move(const FInputActionValue& Value)
 	}
 }
 
+void ASpaceRunner::Fire(const FInputActionValue& Value)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Fire!"));
+	
+	FHitResult Hit;
+	
+	FVector Start = GetActorLocation();
+	FVector End = Start + (GetActorForwardVector() * 3000);
+
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(this);
+
+	if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECollisionChannel::ECC_Visibility,
+		Params, FCollisionResponseParams()))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Hit!"));
+	}
+
+	DrawDebugLine(GetWorld(), Start, End, FColor::Red, false, 5.0f);
+
+}
+
 void ASpaceRunner::RestartLevel()
 {
 
@@ -110,6 +119,9 @@ void ASpaceRunner::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this,
 			&ASpaceRunner::Move);
+
+		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Started, this,
+			&ASpaceRunner::Fire);
 	}
 }
 
@@ -117,6 +129,14 @@ void ASpaceRunner::OnOverlapBegin(UPrimitiveComponent* OverlappedComp,
 	AActor* OtherActor, UPrimitiveComponent* OtherComp,
 	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+
+}
+
+void ASpaceRunner::Destroyed()
+{
+	Super::Destroyed();
+
+	UE_LOG(LogTemp, Warning, TEXT("I was Destroyed!!"));
 
 }
 
