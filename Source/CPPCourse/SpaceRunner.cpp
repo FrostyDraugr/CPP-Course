@@ -15,6 +15,9 @@
 
 #include "Engine/World.h"
 
+#include "SpaceshipHUD.h"
+#include "Blueprint/UserWidget.h"
+
 // Sets default values
 ASpaceRunner::ASpaceRunner()
 {
@@ -28,10 +31,11 @@ ASpaceRunner::ASpaceRunner()
 	GetCharacterMovement()->DefaultLandMovementMode = MOVE_Flying;
 	GetCharacterMovement()->BrakingDecelerationFlying = 5.0f;
 
-	tempPos = GetActorLocation();
-	zPosition = tempPos.Z + 300.0f;
-
 	HealthComponent = CreateDefaultSubobject<UHealthComp>(TEXT("Health Component"));
+
+	//HUD
+	PlayerHUDClass = nullptr;
+	PlayerHUD = nullptr;
 }
 
 // Called when the game starts or when spawned
@@ -41,12 +45,31 @@ void ASpaceRunner::BeginPlay()
 	
 	//UE_LOG(LogTemp, Warning, TEXT("Testing"));
 
-	if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
+	APlayerController* PlayerController = Cast<APlayerController>(GetController());
+
+	if (PlayerController)
 	{
 		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
 		{
 			Subsystem->AddMappingContext(ShipMappingContext, 0);
 		}
+	}
+
+	if (PlayerHUDClass)
+	{
+		PlayerHUD = CreateWidget<USpaceshipHUD>(PlayerController, PlayerHUDClass);
+		check(PlayerHUD);
+		PlayerHUD->AddToPlayerScreen();
+	}
+}
+
+void ASpaceRunner::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	if (PlayerHUD)
+	{
+		PlayerHUD->RemoveFromParent();
+		//Offloading destruction of widget to Garbace Collector
+		PlayerHUD = nullptr;
 	}
 }
 

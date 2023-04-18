@@ -26,6 +26,8 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
 	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 	//UInputAction* MoveAction;
 
@@ -51,6 +53,13 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 		class UHealthComp* HealthComponent;
 
+	//HUD
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<class USpaceshipHUD> PlayerHUDClass;
+
+	UPROPERTY()
+		class USpaceshipHUD* PlayerHUD;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -72,11 +81,5 @@ public:
 	
 	UFUNCTION()
 		void Destroyed();
-
-private:
-	float zPosition;
-	FVector tempPos = FVector();
-
-	bool CanMove;
 
 };
