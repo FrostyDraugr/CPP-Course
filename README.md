@@ -1,4 +1,8 @@
 # CPP-Course#
+
+**THIS PROJECT WAS BUILT IN VISUAL STUDIO 2022, UE 5.1.1**
+**You will need the following free Plugin installed to your engine version: https://www.unrealengine.com/marketplace/en-US/product/visual-studio-integration-tool?sessionInvalidated=true**
+
 First Release of the Project, Includes the following:
 
 Controllable Player:
@@ -24,6 +28,7 @@ Known Issues:
 - Obstacles don't use sweeping when moving.
 - Player Character isn't sweeping when input is null.
 - Really Hard to die later in the game due to collision issue.
+- Build already have high scores (This is due to me testing the build before release, sorry but I don't think anyone plays this for fun)
 
 Planned Features:
 - GamePad functionality.
