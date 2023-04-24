@@ -35,6 +35,7 @@ Known Issues:
 - Really Hard to die later in the game due to collision issue.
 - Build already have high scores (This is due to me testing the build before release, sorry but I don't think anyone plays this for fun)
 - The Players movement is restricted by invisible walls, I hate this with a passion but I don't know how to Clamp the Players Movement whilst using the **Character Movement component**.
+- The cylinders that are the "floor" are just there to showcase that there's flooring of some kind. It's not meant to actually be touched by the player as they are a little space ship wos wos.
 
 Planned Features:
 - GamePad functionality.
