@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
+#include "SpaceRunnerGM.h"
 #include "SpaceRunner.generated.h"
 
 class UInputMappingContext;
@@ -18,6 +19,7 @@ class CPPCOURSE_API ASpaceRunner : public ACharacter
 		UPROPERTY(VisibleAnywhere)
 		class UCameraComponent* ViewCamera;
 
+	
 public:
 	// Sets default values for this character's properties
 	ASpaceRunner();
@@ -67,6 +69,11 @@ protected:
 
 		float MaxHealth;
 
+
+
+		class ASpaceRunnerGM* GameMode;
+
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -81,6 +88,9 @@ public:
 
 	void RestartLevel();
 
+	UPROPERTY(BlueprintReadOnly)
+	float Score;
+
 	UFUNCTION()
 		void OnOverlapBegin(UPrimitiveComponent* OverlappedComp,
 			AActor* OtherActor, UPrimitiveComponent* OtherComp,
@@ -93,4 +103,8 @@ public:
 
 	void UpdatePower(float CurrentP, float MaxP);
 
+	UFUNCTION(BlueprintNativeEvent, Category="Death")
+	void SaveHighScore();
+
+	void SaveHighScore_Implementation();
 };

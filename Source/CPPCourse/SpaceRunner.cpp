@@ -18,6 +18,8 @@
 #include "SpaceshipHUD.h"
 #include "Blueprint/UserWidget.h"
 
+#include "Kismet/GameplayStatics.h"
+
 #include "Enemy.h"
 //#include "Kismet/GameplayStatics.h"
 
@@ -41,6 +43,8 @@ ASpaceRunner::ASpaceRunner()
 	PlayerHUD = nullptr;
 
 	MaxPower = 100.f;
+
+	Score = 0;
 }
 
 // Called when the game starts or when spawned
@@ -51,6 +55,8 @@ void ASpaceRunner::BeginPlay()
 	//UE_LOG(LogTemp, Warning, TEXT("Testing"));
 
 	APlayerController* PlayerController = Cast<APlayerController>(GetController());
+
+	GameMode = Cast<ASpaceRunnerGM>(UGameplayStatics::GetGameMode(GetWorld()));
 
 	if (PlayerController)
 	{
@@ -83,6 +89,8 @@ void ASpaceRunner::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	}
 }
 
+
+
 // Called every frame
 void ASpaceRunner::Tick(float DeltaTime)
 {
@@ -92,6 +100,12 @@ void ASpaceRunner::Tick(float DeltaTime)
 	CPower = FMath::Clamp(CPower, 0.f, 100.f);
 
 	UpdatePower(CPower, MaxPower);
+
+	if (GameMode)
+	{
+	Score += DeltaTime * 10 * (GameMode->GetSpeedMod());
+	PlayerHUD->SetScore(Score);
+	}
 }
 
 void ASpaceRunner::Boost(const FInputActionValue& Value)
@@ -186,8 +200,9 @@ void ASpaceRunner::OnOverlapBegin(UPrimitiveComponent* OverlappedComp,
 void ASpaceRunner::Destroyed()
 {
 	Super::Destroyed();
+	UE_LOG(LogTemp, Warning, TEXT("Death Event"));
 
-	UE_LOG(LogTemp, Warning, TEXT("I was Destroyed!!"));
+	SaveHighScore();
 }
 
 void ASpaceRunner::UpdateHealth(float CurrentH, float MaxH)
@@ -200,5 +215,7 @@ void ASpaceRunner::UpdatePower(float CurrentP, float MaxP)
 	PlayerHUD->SetPower(CurrentP, MaxP);
 }
 
+void ASpaceRunner::SaveHighScore_Implementation()
+{
 
-
+}

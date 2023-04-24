@@ -21,9 +21,14 @@ class CPPCOURSE_API USpaceshipHUD : public UUserWidget
 		//Update HUD with current power
 		void SetPower(float CurrentPower, float MaxPower);
 
+		void SetScore(int32 score);
+
 		UPROPERTY(EditAnywhere, meta = (BindWidget))
 			class UProgressBar* HealthBar;
 		
 		UPROPERTY(EditAnywhere, meta = (BindWidget))
 			class UProgressBar* PowerBar;
+
+		UPROPERTY(EditAnywhere, meta = (BindWidget))
+			class UTextBlock* TextBlock;
 };

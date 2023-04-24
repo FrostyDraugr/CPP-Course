@@ -50,7 +50,14 @@ void UHealthComp::TakeDamage(AActor* DamageActor, float Damage, const UDamageTyp
 
 	if (Health == 0)
 	{
+		if (Player)
+		{
+			Player->SaveHighScore();
+		}
+		else
+		{
 		GetOwner()->Destroy();
+		}
 	}
 
 }
