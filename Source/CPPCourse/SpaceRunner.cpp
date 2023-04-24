@@ -200,9 +200,6 @@ void ASpaceRunner::OnOverlapBegin(UPrimitiveComponent* OverlappedComp,
 void ASpaceRunner::Destroyed()
 {
 	Super::Destroyed();
-	UE_LOG(LogTemp, Warning, TEXT("Death Event"));
-
-	SaveHighScore();
 }
 
 void ASpaceRunner::UpdateHealth(float CurrentH, float MaxH)
