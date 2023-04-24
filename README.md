@@ -1,7 +1,7 @@
 # CPP-Course#
 First Release of the Project, Includes the following:
 
-Controllable Player
+Controllable Player:
 - 2D Movement
 - Fire Action
 - Health & Death
@@ -19,15 +19,15 @@ Known Bugs:
 (The mesh the player uses is a cone that was added through the BP not the code, forgot to change it and I'm sure it's the biggest reasons for my issues)
 
 Known Issues:
--No pause menu for easy restart
--No Death Screen to showcase score/new Highscore
--Obstacles don't use sweeping when moving
--Player Character isn't sweeping when input is null
--Really Hard to die later in the game due to collision issue
+-No pause menu for easy restart.
+-No Death Screen to showcase score/new Highscore.
+-Obstacles don't use sweeping when moving.
+-Player Character isn't sweeping when input is null.
+-Really Hard to die later in the game due to collision issue.
 
 Planned Features:
--GamePad functionality
--Boost Action
--Pickups
--Hostile NPC's
--Player Will Use Projectile instead of Line Trace
+-GamePad functionality.
+-Boost Action.
+-Pickups.
+-Hostile NPC's.
+-Player Will Use Projectile instead of Line Trace.
