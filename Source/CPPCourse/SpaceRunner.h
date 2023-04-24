@@ -59,6 +59,9 @@ protected:
 
 	UPROPERTY()
 		class USpaceshipHUD* PlayerHUD;
+	
+	UPROPERTY(EditAnywhere)
+		float PowerDelta;
 
 public:	
 	// Called every frame

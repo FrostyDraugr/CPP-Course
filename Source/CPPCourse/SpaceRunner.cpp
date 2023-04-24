@@ -18,6 +18,9 @@
 #include "SpaceshipHUD.h"
 #include "Blueprint/UserWidget.h"
 
+#include "Enemy.h"
+//#include "Kismet/GameplayStatics.h"
+
 // Sets default values
 ASpaceRunner::ASpaceRunner()
 {
@@ -36,6 +39,8 @@ ASpaceRunner::ASpaceRunner()
 	//HUD
 	PlayerHUDClass = nullptr;
 	PlayerHUD = nullptr;
+
+	PowerDelta = -1.f;
 }
 
 // Called when the game starts or when spawned
@@ -92,7 +97,6 @@ void ASpaceRunner::Boost(const FInputActionValue& Value)
 void ASpaceRunner::Move(const FInputActionValue& Value)
 {
 	const FVector2D MoveAxisValue = Value.Get<FVector2D>();
-	UE_LOG(LogTemp, Warning, TEXT("MovementTriggered: %s"), *MoveAxisValue.ToString());
 
 	if (Controller && !(MoveAxisValue.IsZero()))
 	{
@@ -116,6 +120,16 @@ void ASpaceRunner::Fire(const FInputActionValue& Value)
 	if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECollisionChannel::ECC_Visibility,
 		Params, FCollisionResponseParams()))
 	{
+		AEnemy* Target = Cast<AEnemy>(Hit.GetActor());
+
+		if (Target)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Valid Target!"));
+
+			FPointDamageEvent DamageEvent(3.f, Hit, this->GetActorForwardVector(), nullptr);
+			Target->TakeDamage(3.f, DamageEvent, GetController(), this);
+		}
+
 		UE_LOG(LogTemp, Warning, TEXT("Hit!"));
 	}
 
