@@ -34,6 +34,7 @@ Known Issues:
 - Player Character isn't sweeping when input is null.
 - Really Hard to die later in the game due to collision issue.
 - Build already have high scores (This is due to me testing the build before release, sorry but I don't think anyone plays this for fun)
+- The Players movement is restricted by invisible walls, I hate this with a passion but I don't know how to Clamp the Players Movement whilst using the **Character Movement component**.
 
 Planned Features:
 - GamePad functionality.
