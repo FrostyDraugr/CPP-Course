@@ -3,6 +3,11 @@
 **THIS PROJECT WAS BUILT IN VISUAL STUDIO 2022, UE 5.1.1**
 **You will need the following free Plugin installed to your engine version: https://www.unrealengine.com/marketplace/en-US/product/visual-studio-integration-tool?sessionInvalidated=true**
 
+All (Except for saving Highscores) classes have been coded in C++, before a Blueprint was created using
+said C++ class as a parent.
+
+Where I could I've reused components as much as I can, with both Obstacles and Player sharing the same Health Component.
+
 First Release of the Project, Includes the following:
 
 Controllable Player:
