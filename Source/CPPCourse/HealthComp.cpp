@@ -28,6 +28,8 @@ void UHealthComp::BeginPlay()
 		Owner->OnTakeAnyDamage.AddDynamic(this, &UHealthComp::TakeDamage);
 	}
 
+	Player = Cast<ASpaceRunner>(Owner);
+
 	// ...
 	
 }
@@ -40,6 +42,11 @@ void UHealthComp::TakeDamage(AActor* DamageActor, float Damage, const UDamageTyp
 	}
 
 	Health = FMath::Clamp(Health - Damage, 0.0f, DefaultHealth);
+
+	if (Player)
+	{
+		Player->UpdateHealth(Health, DefaultHealth);
+	}
 
 	if (Health == 0)
 	{

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "SpaceRunner.h"
 #include "HealthComp.generated.h"
 
 
@@ -19,6 +20,8 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+
+	ASpaceRunner* Player;
 
 public:	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")

@@ -60,8 +60,12 @@ protected:
 	UPROPERTY()
 		class USpaceshipHUD* PlayerHUD;
 	
-	UPROPERTY(EditAnywhere)
-		float PowerDelta;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+		float MaxPower;
+		
+		float CPower;
+
+		float MaxHealth;
 
 public:	
 	// Called every frame
@@ -84,5 +88,9 @@ public:
 	
 	UFUNCTION()
 		void Destroyed();
+	
+	void UpdateHealth(float CurrentH, float MaxH);
+
+	void UpdatePower(float CurrentP, float MaxP);
 
 };

@@ -40,7 +40,7 @@ ASpaceRunner::ASpaceRunner()
 	PlayerHUDClass = nullptr;
 	PlayerHUD = nullptr;
 
-	PowerDelta = -1.f;
+	MaxPower = 100.f;
 }
 
 // Called when the game starts or when spawned
@@ -65,7 +65,12 @@ void ASpaceRunner::BeginPlay()
 		PlayerHUD = CreateWidget<USpaceshipHUD>(PlayerController, PlayerHUDClass);
 		check(PlayerHUD);
 		PlayerHUD->AddToPlayerScreen();
+		PlayerHUD->SetHealth(HealthComponent->Health, HealthComponent->DefaultHealth);
 	}
+
+	UpdateHealth(HealthComponent->Health, HealthComponent->DefaultHealth);
+
+	CPower = MaxPower;
 }
 
 void ASpaceRunner::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -83,6 +88,10 @@ void ASpaceRunner::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	CPower += DeltaTime;
+	CPower = FMath::Clamp(CPower, 0.f, 100.f);
+
+	UpdatePower(CPower, MaxPower);
 }
 
 void ASpaceRunner::Boost(const FInputActionValue& Value)
@@ -107,7 +116,12 @@ void ASpaceRunner::Move(const FInputActionValue& Value)
 
 void ASpaceRunner::Fire(const FInputActionValue& Value)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Fire!"));
+	if (CPower < 10.f)
+	{
+		return;
+	}
+
+	CPower -= 10.f;
 	
 	FHitResult Hit;
 	
@@ -174,6 +188,17 @@ void ASpaceRunner::Destroyed()
 	Super::Destroyed();
 
 	UE_LOG(LogTemp, Warning, TEXT("I was Destroyed!!"));
-
 }
+
+void ASpaceRunner::UpdateHealth(float CurrentH, float MaxH)
+{
+	PlayerHUD->SetHealth(CurrentH, MaxH);
+}
+
+void ASpaceRunner::UpdatePower(float CurrentP, float MaxP)
+{
+	PlayerHUD->SetPower(CurrentP, MaxP);
+}
+
+
 

@@ -21,15 +21,6 @@ void AFloorMover::BeginPlay()
 	
 	GameMode = Cast<ASpaceRunnerGM>(UGameplayStatics::GetGameMode(GetWorld()));
 
-	if (GameMode)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Valid Game Mode!"));
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Invalid Game Mode Check!"));
-	}
-
 	for (int32 i = 0; i < NumberOfParts; i++)
 	{
 		Spawn(i);
@@ -44,11 +35,9 @@ void AFloorMover::Tick(float DeltaTime)
 	if (GameMode)
 	{
 		GameMode->IncreaseSpeedMod(DeltaTime * 0.1f);
-		UE_LOG(LogTemp, Warning, TEXT("Valid Tick Check!"));
 	
 	for(AActor* Actor : Floor)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Valid For Loop Check!"));
 		FVector Position = Actor->GetActorLocation();
 
 		float XMod = GameMode->GetSpeedMod() * -10.f;
