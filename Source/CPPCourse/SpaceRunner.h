@@ -46,6 +46,9 @@ protected:
 
 	void Move(const FInputActionValue& Value);
 
+	void Move2(const FInputActionValue& Value);
+
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 		UInputAction* FireAction;
 
@@ -53,6 +56,9 @@ protected:
 		UInputAction* FireAction2;
 
 	void Fire(const FInputActionValue& Value);
+
+	void Fire2(const FInputActionValue& Value);
+
 
 
 	UPROPERTY(VisibleAnywhere)
@@ -72,8 +78,6 @@ protected:
 
 		float MaxHealth;
 
-
-
 		class ASpaceRunnerGM* GameMode;
 
 
@@ -88,6 +92,8 @@ public:
 	{
 		return ViewCamera;
 	}
+
+	ASpaceRunner* Player2;
 
 	void RestartLevel();
 
@@ -113,4 +119,5 @@ public:
 
 private:
 	bool MoveHack;
+	bool SkipInput;
 };

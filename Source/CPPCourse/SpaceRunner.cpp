@@ -47,6 +47,9 @@ ASpaceRunner::ASpaceRunner()
 	Score = 0;
 
 	MoveHack = true;
+
+	Player2 = nullptr;
+	SkipInput = false;
 }
 
 // Called when the game starts or when spawned
@@ -63,19 +66,28 @@ void ASpaceRunner::BeginPlay()
 
 	APlayerController* PlayerController = GameMode->GetPlayerController();
 
-	int32 id = GetLocalViewingPlayerController()->GetLocalPlayer()->GetControllerId();
 
 	if (PlayerController)
 	{
-		if (id == 0)
-		{
 
-			if (UEnhancedInputLocalPlayerSubsystem* Subsystem =
-				ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
-			{
-				Subsystem->AddMappingContext(ShipMappingContext, 0);
-			}
+		if (UEnhancedInputLocalPlayerSubsystem* Subsystem =
+			ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
+		{
+			Subsystem->AddMappingContext(ShipMappingContext, 0);
 		}
+
+			if (GetWorld()->GetFirstPlayerController() != PlayerController)
+			{
+				ASpaceRunner* Player1 = Cast<ASpaceRunner>(GetWorld()->GetFirstPlayerController()->GetPawn());
+				
+				if (Player1)
+				{
+					Player1->Player2 = this;
+					SkipInput = true;
+				}
+			}
+
+
 
 	}
 
@@ -152,6 +164,14 @@ void ASpaceRunner::Move(const FInputActionValue& Value)
 	}
 }
 
+void ASpaceRunner::Move2(const FInputActionValue& Value)
+{
+	if (Player2)
+	{
+		Player2->Move(Value);
+	}
+}
+
 void ASpaceRunner::Fire(const FInputActionValue& Value)
 {
 	if (CPower < 10.f)
@@ -189,6 +209,14 @@ void ASpaceRunner::Fire(const FInputActionValue& Value)
 
 }
 
+void ASpaceRunner::Fire2(const FInputActionValue& Value)
+{
+	if (Player2)
+	{
+		Player2->Fire(Value);
+	}
+}
+
 void ASpaceRunner::RestartLevel()
 {
 
@@ -198,15 +226,13 @@ void ASpaceRunner::RestartLevel()
 void ASpaceRunner::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-	UE_LOG(LogTemp, Warning, TEXT("Setup Player Input"));
-
+	
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
 	{
-		int32 id = GetLocalViewingPlayerController()->GetLocalPlayer()->GetControllerId();
+			
+		if (SkipInput)
+			return;
 
-		if (id == 0)
-		{
 			UE_LOG(LogTemp, Warning, TEXT("Setup Player 1 Input"));
 
 			EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this,
@@ -214,17 +240,14 @@ void ASpaceRunner::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 			EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Started, this,
 				&ASpaceRunner::Fire);
-		}
-		else
-		{
+
 			UE_LOG(LogTemp, Warning, TEXT("Setup Player 2 Input"));
 
 			EnhancedInputComponent->BindAction(MoveAction2, ETriggerEvent::Triggered, 
-				this, &ASpaceRunner::Move);
+				this, &ASpaceRunner::Move2);
 
 			EnhancedInputComponent->BindAction(FireAction2, ETriggerEvent::Started, 
-				this, &ASpaceRunner::Fire);
-		}
+				this, &ASpaceRunner::Fire2);
 
 	}
 }
