@@ -107,4 +107,7 @@ public:
 	void SaveHighScore();
 
 	void SaveHighScore_Implementation();
+
+private:
+	bool MoveHack;
 };

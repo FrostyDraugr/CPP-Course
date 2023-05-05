@@ -45,12 +45,15 @@ ASpaceRunner::ASpaceRunner()
 	MaxPower = 100.f;
 
 	Score = 0;
+
+	MoveHack = true;
 }
 
 // Called when the game starts or when spawned
 void ASpaceRunner::BeginPlay()
 {
 	Super::BeginPlay();
+
 	
 	//UE_LOG(LogTemp, Warning, TEXT("Testing"));
 
@@ -106,6 +109,17 @@ void ASpaceRunner::Tick(float DeltaTime)
 	Score += DeltaTime * 10 * (GameMode->GetSpeedMod());
 	PlayerHUD->SetScore(Score);
 	}
+
+	if (MoveHack)
+	{
+		AddMovementInput(GetActorRightVector() * 0.1f);
+	}
+	else
+	{
+		AddMovementInput(GetActorRightVector() * -0.1f);
+	}
+
+	MoveHack = !MoveHack;
 }
 
 void ASpaceRunner::Boost(const FInputActionValue& Value)
