@@ -8,6 +8,11 @@
 
 **Thank you for your patience.**
 
+The obstacle despawning does work however, the remaining issue with Co-op is that the Player 2 Controller overwrites Player 1
+
+
+
+
 **THIS PROJECT WAS BUILT IN VISUAL STUDIO 2022, UE 5.1.1**
 **You will need the following free Plugin installed to your engine version: https://www.unrealengine.com/marketplace/en-US/product/visual-studio-integration-tool?sessionInvalidated=true**
 
