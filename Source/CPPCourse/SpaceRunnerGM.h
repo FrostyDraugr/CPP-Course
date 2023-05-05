@@ -25,6 +25,8 @@ public:
 
 	float GetHeight();
 
+	APlayerController* GetPlayerController();
+
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Speed")
 	float MaxSpeed;
@@ -36,4 +38,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Boundaries")
 		float MapWidth;
+
+private:
+	int32 i;
 };

@@ -57,16 +57,26 @@ void ASpaceRunner::BeginPlay()
 	
 	//UE_LOG(LogTemp, Warning, TEXT("Testing"));
 
-	APlayerController* PlayerController = Cast<APlayerController>(GetController());
+	//APlayerController* PlayerController = Cast<APlayerController>(GetController());
 
 	GameMode = Cast<ASpaceRunnerGM>(UGameplayStatics::GetGameMode(GetWorld()));
 
+	APlayerController* PlayerController = GameMode->GetPlayerController();
+
+	int32 id = GetLocalViewingPlayerController()->GetLocalPlayer()->GetControllerId();
+
 	if (PlayerController)
 	{
-		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
+		if (id == 0)
 		{
-			Subsystem->AddMappingContext(ShipMappingContext, 0);
+
+			if (UEnhancedInputLocalPlayerSubsystem* Subsystem =
+				ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
+			{
+				Subsystem->AddMappingContext(ShipMappingContext, 0);
+			}
 		}
+
 	}
 
 	if (PlayerHUDClass)
@@ -193,14 +203,29 @@ void ASpaceRunner::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
 	{
-		EnhancedInputComponent->BindAction(BoostAction, ETriggerEvent::Started, this,
-			&ASpaceRunner::Boost);
+		int32 id = GetLocalViewingPlayerController()->GetLocalPlayer()->GetControllerId();
 
-		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this,
-			&ASpaceRunner::Move);
+		if (id == 0)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Setup Player 1 Input"));
 
-		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Started, this,
-			&ASpaceRunner::Fire);
+			EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this,
+				&ASpaceRunner::Move);
+
+			EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Started, this,
+				&ASpaceRunner::Fire);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Setup Player 2 Input"));
+
+			EnhancedInputComponent->BindAction(MoveAction2, ETriggerEvent::Triggered, 
+				this, &ASpaceRunner::Move);
+
+			EnhancedInputComponent->BindAction(FireAction2, ETriggerEvent::Started, 
+				this, &ASpaceRunner::Fire);
+		}
+
 	}
 }
 

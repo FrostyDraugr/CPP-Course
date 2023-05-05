@@ -2,6 +2,9 @@
 
 
 #include "SpaceRunnerGM.h"
+#include "Kismet/GameplayStatics.h"
+#include "Engine/World.h"
+
 
 ASpaceRunnerGM::ASpaceRunnerGM()
 {
@@ -12,6 +15,8 @@ ASpaceRunnerGM::ASpaceRunnerGM()
 	MapHeight = 400.f;
 
 	PrimaryActorTick.bCanEverTick = false;
+
+	i = 0;
 }
 
 void ASpaceRunnerGM::IncreaseSpeedMod(float increase)
@@ -33,4 +38,18 @@ float ASpaceRunnerGM::GetWidth()
 float ASpaceRunnerGM::GetHeight()
 {
 	return MapWidth;
+}
+
+APlayerController* ASpaceRunnerGM::GetPlayerController()
+{
+	APlayerController* NewPlayer = UGameplayStatics::GetPlayerController(GetWorld(), i);
+
+	if (NewPlayer == nullptr)
+	{
+		NewPlayer = UGameplayStatics::CreatePlayer(GetWorld(), i, true);
+	}
+
+	i++;
+
+	return NewPlayer;
 }

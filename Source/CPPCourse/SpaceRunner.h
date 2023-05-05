@@ -39,15 +39,18 @@ protected:
 		UInputMappingContext* ShipMappingContext;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
-		UInputAction* BoostAction;
+		UInputAction* MoveAction;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
-		UInputAction* MoveAction;
+		UInputAction* MoveAction2;
 
 	void Move(const FInputActionValue& Value);
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 		UInputAction* FireAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+		UInputAction* FireAction2;
 
 	void Fire(const FInputActionValue& Value);
 
