@@ -56,6 +56,11 @@ void AFloorMover::Tick(float DeltaTime)
 
 			FloorPartS->Despawn();
 
+			if (FMath::FRandRange(0, 100) < 10 && PrevActor)
+			{
+				Cast<AFloorPart>(PrevActor)->Despawn();
+			}
+
 			FVector NewPos = Actor->GetActorLocation();
 
 			NewPos.X += (NumberOfParts * FloorOffset);
@@ -64,6 +69,8 @@ void AFloorMover::Tick(float DeltaTime)
 
 			FloorPartS->Spawn(FloorPartS->GetActorLocation());
 		}
+
+		PrevActor = Actor;
 	}
 	}
 }

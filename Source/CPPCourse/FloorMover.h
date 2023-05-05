@@ -40,4 +40,6 @@ private:
 	void Spawn(int32 index);
 
 	ASpaceRunnerGM* GameMode;
+
+	AActor* PrevActor;
 };
