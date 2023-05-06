@@ -2,6 +2,19 @@
 
 **Part Two has been released and can be found in the tag, Part 2**
 
+Notabel Commits:
+
+d001b99:
+Fixed Asteroid Despawning Mechanic
+
+e7239a8:
+Fixed Co-op Implementation
+
+Rihgt now there's a bug in the game when the game is booted up for the first time where a second player controller created properly.
+
+This is fixed by playing the game again, I won't change the code since it would fall after the deadline.
+(The fix for this is already implemented in the released version of Part 2)
+
 **THIS PROJECT WAS BUILT IN VISUAL STUDIO 2022, UE 5.1.1**
 **You will need the following free Plugin installed to your engine version: https://www.unrealengine.com/marketplace/en-US/product/visual-studio-integration-tool?sessionInvalidated=true**
 
