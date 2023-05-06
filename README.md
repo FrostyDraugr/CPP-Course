@@ -1,17 +1,6 @@
 # CPP-Course#
 
-**As of now co-op doesn't work!!!**
-
-**When I was working on it tonight it functioned, only for me to boot up Unreal after pushing my latest change on Git to find that it didn't work anymore.**
-
-**I'm not sure what broke or if I imagined things, but I will try to fix it over the weekend if at all possible.**
-
-**Thank you for your patience.**
-
-The obstacle despawning does work however, the remaining issue with Co-op is that the Player 2 Controller overwrites Player 1
-
-
-
+**Part Two has been released and can be found in the tag, Part 2**
 
 **THIS PROJECT WAS BUILT IN VISUAL STUDIO 2022, UE 5.1.1**
 **You will need the following free Plugin installed to your engine version: https://www.unrealengine.com/marketplace/en-US/product/visual-studio-integration-tool?sessionInvalidated=true**
